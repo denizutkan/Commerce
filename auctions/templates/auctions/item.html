@@ -1,0 +1,97 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    
+    <div style="padding: 10px; text-align: left;">
+        {% if user.is_authenticated %}
+        {% if not wishlist %}
+        <form action="" method="POST">
+        {% csrf_token %}
+        <input style="color: royalblue; border: aliceblue;" type="submit" name="wishlist" value="Add to wishlist">
+        </form>
+        {% else %}
+        <form action="" method="POST">
+        {% csrf_token %}
+        <input style="color: royalblue; border: aliceblue;" type="submit" name="wishlist" value="Remove from wishlist">
+        </form>
+        {% endif %}
+    {% endif %}</div>
+
+    <div style="width: 48%; float:left; height:600px; margin:10px; padding: 10px;">
+    <img width="600" height="600" src= {{item.image}} alt="">
+    </div>
+    <div style="width: 48%; float:right; height:600px; margin:10px; padding: 10px; text-align: left;">
+        <h1>{{item}}</h1>
+        <hr>
+        <h2>Description</h2>
+        <div>{{description}}</div>
+        <hr>
+
+        <h2>Categories</h2>
+        <ul>
+            {% for categorie in item_categories  %}
+                <li>{{categorie.categorie}}</li>
+            {% empty %}
+                <li>Listing has no categorie</li>
+            {% endfor %}
+        </ul>
+        <hr>
+    
+        <div>
+        {% if activation and user.is_authenticated %}
+            <form action="" method="POST">
+            {% csrf_token %}
+            <input type="number" name="new_bid" placeholder="New Bid">
+            <input style="color: royalblue; border: aliceblue;" type="submit" name="place_bid" value="Place Bid">
+        {% endif %}
+            <h2>Current Bid: {{bid}}</h2>
+        </div>
+        {% if error %}
+        <div>New bid must be higher then current bid</div>
+        {% endif %}
+
+        <div style="padding: 20px;">
+            {% if user_listing and activation %}
+            <form action="" method="POST">
+            {% csrf_token %}
+            <input style="color:red; border: aliceblue;" type="submit" name="closelisting" value="Close Auction">
+            </form>
+            {% endif %}
+
+        </div>
+
+        {% if activation %}
+        <div style="padding: 10px; width: 48%; float:left; margin:10px; color: rgb(45, 248, 45);">Active Listing</div>
+        {% else %}
+        <div style="margin: 10px; color: red;">Auction has closed</div>
+        <div style="margin: 10px;"><h4>Winner : {{item.winner}}</h3></div>
+        {% endif %}
+
+
+        
+    </div>
+
+
+    <div style="text-align: center;">
+        <p>____________________________________________________________________________________________________________</p>
+        <p>Add Comment:</p>
+        {% if user.is_authenticated %}
+            <form action="" id="new_comment" method="POST">
+            {% csrf_token %}
+            <div style="margin: 10px;"><textarea name="comment" id="" cols="100" rows="4"></textarea></div>
+            <input style="color: white; border-radius: 1mm; background-color: grey; border-color: honeydew;" type="submit" id="new_comment" name="add_comment" value="Add Comment">
+            </form>
+        {% endif %}    
+        <h2 style="padding: 10px;">Comments</h2>
+        <ul>
+            {% for comment in comments  %}
+                {{comment}}
+            {% endfor %}
+        </ul>
+    </div>
+    
+
+    
+    
+{% endblock %}

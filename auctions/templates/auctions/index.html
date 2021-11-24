@@ -1,0 +1,46 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+
+    <div style="width: 48%; height:600px; padding: 10px;">
+    {% if categorie_number == 0  %}
+        <ul style="list-style-type: none;">
+            {% for listing in active_listings  %}
+            <li style="border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(231, 231, 231);">
+                <div><a href="{% url 'item' listing.name %}"><h2>{{listing.name}}</h2></a></div>
+                <img width="300" height="300" src= {{listing.image}} alt="">
+                <h4>Descrtiption</h4>
+                <p>{{listing.description}}</p>
+                <h4>Current Bid:</h4>
+                <p style="color: green;">{{listing.bid.bid}}$</p>
+            </li>
+            {% empty %}
+
+                <li>No Listing</li>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <ul style="list-style-type: none;">
+            {% for listing in categorie_listings  %}
+            <li style="border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(231, 231, 231);">
+                <div><a href="{% url 'item' listing.name %}"><h2>{{listing.name}}</h2></a></div>
+                <img width="300" height="300" src= {{listing.image}} alt="">
+                <h4>Descrtiption</h4>
+                <p>{{listing.description}}</p>
+                <h4>Current Bid:</h4>
+                <p style="color: green;">{{listing.bid.bid}}$</p>
+            </li>
+            {% empty %}
+
+                <li>No Listing</li>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
+    
+    
+    </div>
+
+{% endblock %}

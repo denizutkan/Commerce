@@ -1,0 +1,14 @@
+
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+    <ul>
+        {% for listing in wishlist  %}
+            <div style="margin: 10px;"><a href="{% url 'item' listing.name %}">{{listing.name}}</a></div>
+        {% empty %}
+            <li>No Listing</li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

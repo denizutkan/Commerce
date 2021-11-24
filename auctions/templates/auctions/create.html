@@ -1,0 +1,43 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+<form id="create_listing" action="" method="POST">
+    {% csrf_token %}
+    <table style="padding: 20px; font-size: 18px;">
+        <tbody >
+            <tr >
+                <td style="padding: 20px;">Title:</td>
+                <td style="padding: 20px;"><input type="text" name="name" placeholder="Title"></td>
+                {% if error1 %}
+                <div>Name Allready Exist</div>
+                {% endif %}
+            </tr>
+            <tr>
+                <td style="padding: 20px;">URL:</td>
+                <td style="padding: 20px;"><input type="url" name="image" placeholder="Image URL"></td>
+            </tr>
+            <tr>
+                <td style="padding: 20px;">Starting Bid:</td>
+                <td style="padding: 20px;"><input type="number" name="bid" placeholder="" required></td>
+                <td>$</td>
+                {% if error2 %}
+                <div>Listing must have a starting bid</div>
+                {% endif %}
+            </tr>
+        </tbody>
+        </table>
+    <div style="padding: 20px;"> Categories:</div>
+    <hr>
+    {% for categorie in categories  %}
+    <input type="checkbox" name="{{categorie.categorie}}" value= "1"> {{categorie.categorie}}
+    {% endfor %}
+    <hr>
+    <h5 style="padding: 20px;" >Item Description:</h5>
+    <div style="margin: 10px;"><textarea rows="4" cols="50" name="description" form="create_listing"></textarea></div>
+    <input style="color: royalblue; border: aliceblue;" type="submit" value="Create Listing">
+</form>
+
+
+
+{% endblock %}
